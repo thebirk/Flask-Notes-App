@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Notes - Home</title>
+</head>
+<body>
+    <h1>Notes - Home</h1>
+    <hr>
+    Welcome back {{ user.email }}!
+    <form action={{ url_for('logout') }}>
+        <input type="submit" value="Logout">
+    </form>
+    <hr>
+    
+    <form action={{ url_for('add_note') }} id="note-form" method="POST">
+        Title: <input type="text" name="title" title="Title" placeholder="Title">
+        <input type="submit" value="Add">
+    </form>
+    <textarea name="note" form="note-form"></textarea>
+    <hr>
+
+    {% for note in all_notes %}
+    <article>
+        <h3>{{ note.title }}</h3>
+        <h5>{{ note.date }}</h5>
+        <form method="POST" action={{ url_for('delete_note') }}>
+            <input type="hidden" value={{ note.id }} name="post_id">
+            <input type="submit" value="Delete" >
+        </form>
+        <div style="white-space: pre-wrap;">{{ note.note }}</div>
+    </article>
+    <hr>
+    {% endfor %}
+</body>
+</html>
